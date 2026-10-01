@@ -3,56 +3,51 @@ module.exports = {
   forbidden: [
     {
       name: "domain-is-pure",
-      comment:
-        "Domain code may not import npm packages, application, or infrastructure.",
+      comment: "Domain code imports only its own domain and shared-kernel.",
       severity: "error",
-      from: { path: "^packages/(modules/[^/]+|platform)/src/domain/" },
+      from: { path: "^(modules/[^/]+|platform)/domain/" },
       to: {
-        pathNot:
-          "^packages/(modules/[^/]+|platform)/src/domain/|^packages/shared-kernel/",
+        pathNot: "^(modules/[^/]+|platform)/domain/|^shared-kernel/",
+        dependencyTypesNot: ["type-only"],
       },
     },
     {
       name: "application-not-infrastructure",
       comment:
-        "Application layer depends on interfaces, never on infrastructure.",
+        "Application code depends on interfaces, never on infrastructure.",
       severity: "error",
-      from: { path: "^packages/(modules/[^/]+|platform)/src/application/" },
-      to: { path: "^packages/(modules/[^/]+|platform)/src/infrastructure/" },
+      from: { path: "^(modules/[^/]+|platform)/application/" },
+      to: { path: "^(modules/[^/]+|platform)/infrastructure/" },
     },
     {
       name: "modules-only-via-public-index",
-      comment:
-        "A module may import another module only through its src/index.ts.",
+      comment: "A module may import another module only through its index.ts.",
       severity: "error",
-      from: { path: "^packages/modules/([^/]+)/" },
+      from: { path: "^modules/([^/]+)/" },
       to: {
-        path: "^packages/modules/[^/]+/src/",
-        pathNot: [
-          "^packages/modules/$1/",
-          "^packages/modules/[^/]+/src/index\\.ts$",
-        ],
+        path: "^modules/[^/]+/",
+        pathNot: ["^modules/$1/", "^modules/[^/]+/index\\.ts$"],
       },
+    },
+    {
+      name: "ui-must-not-import-backend",
+      comment:
+        "Pages and components never import modules or platform. Only app/api and server/ may.",
+      severity: "error",
+      from: { path: "^app/(?!api/)|^components/" },
+      to: { path: "^(modules|platform)/" },
     },
     {
       name: "no-prisma-outside-infrastructure",
       severity: "error",
-      from: { pathNot: "/infrastructure/|^apps/api/src/composition" },
+      from: { pathNot: "/infrastructure/|^server/composition" },
       to: { path: "node_modules/(@prisma|prisma)/" },
     },
     {
       name: "shared-kernel-depends-on-nothing",
       severity: "error",
-      from: { path: "^packages/shared-kernel/" },
-      to: { path: "^packages/(modules|platform)/|^apps/" },
-    },
-    {
-      name: "web-talks-to-api-only",
-      comment:
-        "The Next.js UI must not import backend modules or platform code. Use HTTP.",
-      severity: "error",
-      from: { path: "^apps/web/" },
-      to: { path: "^packages/(modules|platform)/" },
+      from: { path: "^shared-kernel/" },
+      to: { path: "^(modules|platform|server|app)/" },
     },
     {
       name: "no-circular",
@@ -64,6 +59,6 @@ module.exports = {
   options: {
     tsConfig: { fileName: "tsconfig.json" },
     doNotFollow: { path: "node_modules" },
-    exclude: { path: "\\.test\\.ts$|\\.spec\\.ts$|node_modules|\\.next" },
+    exclude: { path: "node_modules|^\\.next|\\.test\\.ts$|\\.spec\\.ts$" },
   },
 };
