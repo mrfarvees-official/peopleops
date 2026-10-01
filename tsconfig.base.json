@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@peopleops/shared-kernel": ["packages/shared-kernel/src/index.ts"],
+      "@peopleops/platform": ["packages/platform/src/index.ts"],
+      "@peopleops/org": ["packages/modules/org/src/index.ts"],
+      "@peopleops/employee": ["packages/modules/employee/src/index.ts"],
+      "@peopleops/leave": ["packages/modules/leave/src/index.ts"],
+      "@peopleops/attendance": ["packages/modules/attendance/src/index.ts"],
+      "@peopleops/payroll": ["packages/modules/payroll/src/index.ts"],
+      "@peopleops/recruitment": ["packages/modules/recruitment/src/index.ts"],
+      "@peopleops/reporting": ["packages/modules/reporting/src/index.ts"]
+    }
+  }
+}

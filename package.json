@@ -1,0 +1,27 @@
+{
+  "name": "peopleops",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "packages/modules/*"
+  ],
+  "scripts": {
+    "arch": "depcruise packages apps --config .dependency-cruiser.cjs",
+    "test": "vitest run --passWithNoTests",
+    "dev:web": "npm run dev -w @peopleops/web",
+    "build:web": "npm run build -w @peopleops/web"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "dependency-cruiser": "^18.5.0",
+    "eslint": "^10.11.0",
+    "prettier": "^3.9.9",
+    "typescript": "~5.9",
+    "vitest": "^5.0.3"
+  }
+}
