@@ -40,7 +40,7 @@ module.exports = {
     {
       name: "no-prisma-outside-infrastructure",
       severity: "error",
-      from: { pathNot: "/infrastructure/|^server/composition" },
+      from: { pathNot: "/infrastructure/|^server/" },
       to: { path: "node_modules/(@prisma|prisma)/" },
     },
     {

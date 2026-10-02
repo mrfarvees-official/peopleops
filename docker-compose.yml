@@ -1,0 +1,22 @@
+services:
+  mysql:
+    image: mysql:8.0
+    command:
+      [
+        "--default-time-zone=+00:00",
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_0900_ai_ci",
+      ]
+    environment:
+      MYSQL_ROOT_PASSWORD: devroot
+      MYSQL_DATABASE: peopleops
+    ports: ["127.0.0.1:3306:3306"]
+    volumes: ["mysql-data:/var/lib/mysql"]
+    mem_limit: 512m
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pdevroot"]
+      interval: 5s
+      retries: 20
+
+volumes:
+  mysql-data:

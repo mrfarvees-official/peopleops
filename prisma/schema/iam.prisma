@@ -1,0 +1,142 @@
+enum UserStatus {
+  invited
+  active
+  suspended
+}
+
+model Tenant {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  code      String   @unique @db.VarChar(32)
+  name      String   @db.VarChar(255)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now()) @db.DateTime(3)
+  updatedAt DateTime @updatedAt @db.DateTime(3)
+  users     User[]
+  profile   TenantProfile?
+
+  @@map("platform_tenant")
+}
+
+model User {
+  id           String     @id @default(uuid()) @db.VarChar(36)
+  tenantId     String     @db.VarChar(36)
+  email        String     @db.VarChar(255)
+  passwordHash String     @db.VarChar(255)
+  displayName  String     @db.VarChar(255)
+  status       UserStatus @default(invited)
+  version      Int        @default(1) // optimistic locking
+  createdAt    DateTime   @default(now()) @db.DateTime(3)
+  updatedAt    DateTime   @updatedAt @db.DateTime(3)
+  deletedAt    DateTime?  @db.DateTime(3)
+  tenant       Tenant     @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  roles        UserRole[]
+  profile      UserProfile?
+
+  @@unique([tenantId, email])
+  @@index([tenantId, status])
+  @@map("platform_user")
+  sessions Session[]
+}
+
+model Role {
+  id          String     @id @default(uuid()) @db.VarChar(36)
+  code        String     @unique @db.VarChar(64)
+  name        String     @db.VarChar(128)
+  description String?    @db.VarChar(255)
+  createdAt   DateTime   @default(now()) @db.DateTime(3)
+  users       UserRole[]
+
+  @@map("platform_role")
+}
+
+model UserRole {
+  userId     String   @db.VarChar(36)
+  roleId     String   @db.VarChar(36)
+  assignedBy String?  @db.VarChar(36)
+  assignedAt DateTime @default(now()) @db.DateTime(3)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Restrict)
+  role       Role     @relation(fields: [roleId], references: [id], onDelete: Restrict)
+
+  @@id([userId, roleId])
+  @@index([roleId])
+  @@map("platform_user_role")
+}
+
+// Catalogue of verbs: create, update, approve, ...
+model Action {
+  id          String  @id @default(uuid()) @db.VarChar(36)
+  code        String  @unique @db.VarChar(64)
+  description String? @db.VarChar(255)
+
+  @@map("platform_action")
+}
+
+// Catalogue of protected things: employee, payroll_run, ...
+model Resource {
+  id          String  @id @default(uuid()) @db.VarChar(36)
+  code        String  @unique @db.VarChar(64)
+  description String? @db.VarChar(255)
+
+  @@map("platform_resource")
+}
+
+model TenantProfile {
+  tenantId             String   @id @db.VarChar(36)
+  legalName            String?  @db.VarChar(255)
+  registrationNo       String?  @db.VarChar(64)
+  taxNo                String?  @db.VarChar(64)
+  country              String   @default("LK") @db.Char(2) // ISO 3166-1
+  timezone             String   @default("Asia/Colombo") @db.VarChar(64)
+  currency             String   @default("LKR") @db.Char(3) // ISO 4217
+  locale               String   @default("en") @db.VarChar(16)
+  dateFormat           String   @default("YYYY-MM-DD") @db.VarChar(16)
+  fiscalYearStartMonth Int      @default(1) @db.TinyInt
+  contactEmail         String?  @db.VarChar(255)
+  contactPhone         String?  @db.VarChar(32)
+  website              String?  @db.VarChar(255)
+  addressLine1         String?  @db.VarChar(255)
+  addressLine2         String?  @db.VarChar(255)
+  city                 String?  @db.VarChar(128)
+  region               String?  @db.VarChar(128)
+  postalCode           String?  @db.VarChar(16)
+  logoUrl              String?  @db.VarChar(512)
+  version              Int      @default(1)
+  updatedAt            DateTime @updatedAt @db.DateTime(3)
+  tenant    Tenant  @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+
+  @@map("platform_tenant_profile")
+}
+
+model UserProfile {
+  userId        String   @id @db.VarChar(36)
+  firstName     String?  @db.VarChar(128)
+  lastName      String?  @db.VarChar(128)
+  preferredName String?  @db.VarChar(128)
+  phone         String?  @db.VarChar(32)
+  avatarUrl     String?  @db.VarChar(512)
+  jobTitle      String?  @db.VarChar(128)
+  locale        String?  @db.VarChar(16)  // null = use tenant default
+  timezone      String?  @db.VarChar(64)  // null = use tenant default
+  version       Int      @default(1)
+  updatedAt     DateTime @updatedAt @db.DateTime(3)
+  user          User    @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@map("platform_user_profile")
+}
+
+model Session {
+  id         String    @id @default(uuid()) @db.VarChar(36)
+  userId     String    @db.VarChar(36)
+  tokenHash  String    @unique @db.VarChar(64) // SHA-256 of the cookie token
+  createdAt  DateTime  @default(now()) @db.DateTime(3)
+  lastSeenAt DateTime  @default(now()) @db.DateTime(3)
+  expiresAt  DateTime  @db.DateTime(3)
+  revokedAt  DateTime? @db.DateTime(3)
+  ip         String?   @db.VarChar(45)
+  userAgent  String?   @db.VarChar(255)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@index([userId, revokedAt])
+  @@index([expiresAt])
+  @@map("platform_session")
+}

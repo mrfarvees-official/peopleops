@@ -1,0 +1,26 @@
+enum AuditOutcome {
+    success
+    denied
+    failed
+}
+
+model AuditLog {
+    id              BigInt          @id @default(autoincrement())
+    tenantId        String?         @db.VarChar(36)
+    actorId         String?         @db.VarChar(36)
+    action          String          @db.VarChar(64)
+    resourceType    String          @db.VarChar(64)
+    resourceId      String?         @db.VarChar(64)
+    outcome         AuditOutcome    @default(success)
+    before          Json? 
+    after           Json?
+    reason          String?         @db.VarChar(255)
+    requestId       String?         @db.VarChar(64)
+    ip              String?         @db.VarChar(45)
+    occurredAt      DateTime        @default(now()) @db.DateTime(3)
+
+    @@index([tenantId, occurredAt])
+    @@index([resourceType, resourceId])
+    @@index([actorId, occurredAt])
+    @@map("platform_audit_log")
+}

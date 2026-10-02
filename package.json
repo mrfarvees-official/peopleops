@@ -9,9 +9,12 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests",
-    "arch": "depcruise app server --config .dependency-cruiser.cjs"
+    "arch": "depcruise app server platform --config .dependency-cruiser.cjs",
+    "db:seed": "tsx --env-file=.env prisma/seed/index.ts"
   },
   "dependencies": {
+    "@prisma/adapter-mariadb": "^7.10.0",
+    "@prisma/client": "^7.10.0",
     "next": "16.3.8",
     "pino": "^10.3.1",
     "prom-client": "^15.1.3",
@@ -28,7 +31,9 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.8",
     "prettier": "^3.9.9",
+    "prisma": "^7.10.0",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5",
     "vitest": "^5.0.3"
   }
