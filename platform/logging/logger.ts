@@ -1,5 +1,5 @@
 import pino, { type Logger } from "pino";
-import type { Config } from "./config";
+import type { Config } from "../config/config";
 
 // No `transport` option: it starts worker threads, which break under Next.js bundling.
 export function createLogger(config: Config): Logger {

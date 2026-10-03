@@ -1,6 +1,6 @@
-import { loadConfig } from "./config";
-import { createLogger } from "./logger";
-import { createMetrics } from "./metrics";
+import { loadConfig } from "../platform/config/config";
+import { createLogger } from "../platform/logging/logger";
+import { createMetrics } from "../platform/metrics/metrics";
 
 function compose() {
   const config = loadConfig();

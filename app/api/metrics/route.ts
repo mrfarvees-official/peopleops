@@ -1,5 +1,5 @@
 import { container } from "@/server/composition";
-import { monitorAllowed } from "@/server/guard";
+import { monitorAllowed } from "@/platform/metrics/guard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

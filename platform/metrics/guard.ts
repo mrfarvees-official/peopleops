@@ -1,4 +1,4 @@
-import { container } from "./composition";
+import { container } from "../../server/composition";
 
 // Dev: open. Production: only when MONITOR_ENABLED=true.
 // Later this becomes a PBAC check (super_admin / auditor), with every access audited.
