@@ -45,6 +45,12 @@ export interface Policy {
   conditions: PolicyCondition[];
 }
 
+export interface AuthzContext {
+  requestId?: string;
+  ip?: string;
+  env?: Record<string, unknown>;
+}
+
 export interface AuthzSubject {
   id: string;
   tenantId: string;
@@ -166,7 +172,7 @@ export function evaluate(policies: Policy[], req: AuthzRequest): Decision {
   if (isBypass(req.subject)) {
     return { allowed: true, reason: "bypass", matched: [] };
   }
-  
+
   const ctx = {
     subject: req.subject,
     resource: req.resource,

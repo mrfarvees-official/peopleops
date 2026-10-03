@@ -55,7 +55,7 @@ async function main() {
   const password = process.env.SEED_DEFAULT_PASSWORD;
   if (!password || password.length < 8) {
     throw new Error(
-      "Set SEED_DEFAULT_PASSWORD in .env (at least 12 characters)",
+      "Set SEED_DEFAULT_PASSWORD in .env (at least 8 characters)",
     );
   }
   if (process.env.NODE_ENV === "production") {

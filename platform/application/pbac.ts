@@ -1,5 +1,6 @@
 import type { SessionUser } from "../domain/auth";
 import {
+  AuthzContext,
   ForbiddenError,
   evaluate,
   isBypass,
@@ -13,12 +14,6 @@ import type { PolicyRepository } from "./pbac-ports";
 export interface PbacDeps {
   repo: PolicyRepository;
   audit: AuditWriter;
-}
-
-export interface AuthzContext {
-  requestId?: string;
-  ip?: string;
-  env?: Record<string, unknown>;
 }
 
 export function createAuthorizer({ repo, audit: writer }: PbacDeps) {
