@@ -8,7 +8,8 @@ const schema = z.object({
     .enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"])
     .default("info"),
   MONITOR_ENABLED: z.enum(["true", "false"]).default("false"),
-  APP_DATABASE_URL: z.string().optional(),
+  DATABASE_URL: z.string().optional(),
+  SESSION_TTL_HOURS: z.coerce.number().int().positive().default(24),
 });
 
 export type Config = z.infer<typeof schema>;

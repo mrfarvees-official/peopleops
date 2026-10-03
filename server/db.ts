@@ -4,8 +4,8 @@ import { PrismaClient } from "../prisma/app/generated/prisma/client";
 import { container } from "./composition";
 
 function create(): PrismaClient {
-  const raw = container.config.APP_DATABASE_URL;
-  if (!raw) throw new Error("APP_DATABASE_URL is not set");
+  const raw = container.config.DATABASE_URL;
+  if (!raw) throw new Error("DATABASE_URL is not set");
   const u = new URL(raw);
   const adapter = new PrismaMariaDb({
     host: u.hostname,

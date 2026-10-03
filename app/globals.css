@@ -1,26 +1,88 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ===== THEMES: each block is one theme. Add or edit freely. ===== */
+
+/* Default theme, also the fallback if no theme is set */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #0f1115;
+  --foreground: #e6e8ec;
+  --surface: #171a21; /* cards, inputs, panels */
+  --surface-2: #1f232c; /* hover / raised */
+  --border: #2a2f3a;
+  --muted: #8b93a1; /* secondary text */
+  --accent: #6366f1; /* primary buttons, highlights */
+  --accent-foreground: #ffffff;
+  --danger: #f87171;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --info: #60a5fa;
 }
 
+[data-theme="light"] {
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #14161a;
+  --surface: #f6f7f9;
+  --surface-2: #eceef2;
+  --border: #e1e4ea;
+  --muted: #667085;
+  --accent: #4f46e5;
+  --accent-foreground: #ffffff;
+  --danger: #dc2626;
+  --success: #16a34a;
+  --warning: #d97706;
+  --info: #2563eb;
+}
+
+[data-theme="ocean"] {
+  color-scheme: dark;
+  --background: #06141f;
+  --foreground: #e0f2fe;
+  --surface: #0b2234;
+  --surface-2: #11304a;
+  --border: #1c4466;
+  --muted: #7fa6c4;
+  --accent: #38bdf8;
+  --accent-foreground: #04202f;
+  --danger: #fb7185;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --info: #7dd3fc;
+}
+
+/* Turns tokens into Tailwind classes: bg-background, bg-surface, text-muted, bg-accent, ... */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  /* Tailwind v4 borders default to currentColor; use the theme color */
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  }
+  ::placeholder {
+    color: var(--muted);
+  }
 }
