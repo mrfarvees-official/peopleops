@@ -4,6 +4,7 @@ import { hashPassword } from "../../platform/infrastructure/scrypt-password-hash
 import { ACTIONS, RESOURCES, ROLES } from "./data/catalogues";
 import { USERS } from "./data/users";
 import { seedDevelopers } from "./data/developers";
+import { seedPolicies } from "./pbac";
 
 const url = new URL(process.env.DATABASE_URL ?? "");
 const adapter = new PrismaMariaDb({
@@ -38,6 +39,9 @@ async function main() {
       create: { code },
     });
   }
+
+  await seedPolicies(prisma);
+
   await prisma.tenant.upsert({
     where: { code: "platform" },
     update: {},

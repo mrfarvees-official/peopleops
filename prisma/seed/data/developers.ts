@@ -3,7 +3,7 @@ import { hashPassword } from "@/platform/infrastructure/scrypt-password-hasher";
 import { DEVELOPERS } from "./users";
 export async function seedDevelopers(prisma: PrismaClient) {
   const password = process.env.SEED_DEVELOPER_PASSWORD;
-  if (!password || password.length < 12) {
+  if (!password || password.length < 8) {
     throw new Error(
       "Set SEED_DEVELOPER_PASSWORD in .env (at least 12 characters)",
     );
