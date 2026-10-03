@@ -25,3 +25,36 @@ export const UserStatus = {
 } as const
 
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+
+
+export const PolicyEffect = {
+  allow: 'allow',
+  deny: 'deny'
+} as const
+
+export type PolicyEffect = (typeof PolicyEffect)[keyof typeof PolicyEffect]
+
+
+export const SubjectType = {
+  any: 'any',
+  role: 'role',
+  user: 'user'
+} as const
+
+export type SubjectType = (typeof SubjectType)[keyof typeof SubjectType]
+
+
+export const ConditionOperator = {
+  eq: 'eq',
+  neq: 'neq',
+  in: 'in',
+  not_in: 'not_in',
+  gt: 'gt',
+  gte: 'gte',
+  lt: 'lt',
+  lte: 'lte',
+  contains: 'contains',
+  exists: 'exists'
+} as const
+
+export type ConditionOperator = (typeof ConditionOperator)[keyof typeof ConditionOperator]

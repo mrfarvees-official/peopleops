@@ -60,7 +60,11 @@ export const ModelName = {
   Resource: 'Resource',
   TenantProfile: 'TenantProfile',
   UserProfile: 'UserProfile',
-  Session: 'Session'
+  Session: 'Session',
+  Policy: 'Policy',
+  PolicySubject: 'PolicySubject',
+  PolicyTarget: 'PolicyTarget',
+  PolicyCondition: 'PolicyCondition'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -224,6 +228,57 @@ export const SessionScalarFieldEnum = {
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
 
 
+export const PolicyScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  effect: 'effect',
+  isActive: 'isActive',
+  isSystem: 'isSystem',
+  version: 'version',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PolicyScalarFieldEnum = (typeof PolicyScalarFieldEnum)[keyof typeof PolicyScalarFieldEnum]
+
+
+export const PolicySubjectScalarFieldEnum = {
+  id: 'id',
+  policyId: 'policyId',
+  type: 'type',
+  roleId: 'roleId',
+  userId: 'userId'
+} as const
+
+export type PolicySubjectScalarFieldEnum = (typeof PolicySubjectScalarFieldEnum)[keyof typeof PolicySubjectScalarFieldEnum]
+
+
+export const PolicyTargetScalarFieldEnum = {
+  id: 'id',
+  policyId: 'policyId',
+  actionId: 'actionId',
+  resourceId: 'resourceId'
+} as const
+
+export type PolicyTargetScalarFieldEnum = (typeof PolicyTargetScalarFieldEnum)[keyof typeof PolicyTargetScalarFieldEnum]
+
+
+export const PolicyConditionScalarFieldEnum = {
+  id: 'id',
+  policyId: 'policyId',
+  attribute: 'attribute',
+  operator: 'operator',
+  value: 'value',
+  ref: 'ref',
+  position: 'position'
+} as const
+
+export type PolicyConditionScalarFieldEnum = (typeof PolicyConditionScalarFieldEnum)[keyof typeof PolicyConditionScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -384,4 +439,45 @@ export const SessionOrderByRelevanceFieldEnum = {
 } as const
 
 export type SessionOrderByRelevanceFieldEnum = (typeof SessionOrderByRelevanceFieldEnum)[keyof typeof SessionOrderByRelevanceFieldEnum]
+
+
+export const PolicyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  description: 'description'
+} as const
+
+export type PolicyOrderByRelevanceFieldEnum = (typeof PolicyOrderByRelevanceFieldEnum)[keyof typeof PolicyOrderByRelevanceFieldEnum]
+
+
+export const PolicySubjectOrderByRelevanceFieldEnum = {
+  id: 'id',
+  policyId: 'policyId',
+  roleId: 'roleId',
+  userId: 'userId'
+} as const
+
+export type PolicySubjectOrderByRelevanceFieldEnum = (typeof PolicySubjectOrderByRelevanceFieldEnum)[keyof typeof PolicySubjectOrderByRelevanceFieldEnum]
+
+
+export const PolicyTargetOrderByRelevanceFieldEnum = {
+  id: 'id',
+  policyId: 'policyId',
+  actionId: 'actionId',
+  resourceId: 'resourceId'
+} as const
+
+export type PolicyTargetOrderByRelevanceFieldEnum = (typeof PolicyTargetOrderByRelevanceFieldEnum)[keyof typeof PolicyTargetOrderByRelevanceFieldEnum]
+
+
+export const PolicyConditionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  policyId: 'policyId',
+  attribute: 'attribute',
+  ref: 'ref'
+} as const
+
+export type PolicyConditionOrderByRelevanceFieldEnum = (typeof PolicyConditionOrderByRelevanceFieldEnum)[keyof typeof PolicyConditionOrderByRelevanceFieldEnum]
 

@@ -287,6 +287,57 @@ export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
 }
 
+export type EnumPolicyEffectFilter<$PrismaModel = never> = {
+  equals?: $Enums.PolicyEffect | Prisma.EnumPolicyEffectFieldRefInput<$PrismaModel>
+  in?: $Enums.PolicyEffect[]
+  notIn?: $Enums.PolicyEffect[]
+  not?: Prisma.NestedEnumPolicyEffectFilter<$PrismaModel> | $Enums.PolicyEffect
+}
+
+export type EnumPolicyEffectWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PolicyEffect | Prisma.EnumPolicyEffectFieldRefInput<$PrismaModel>
+  in?: $Enums.PolicyEffect[]
+  notIn?: $Enums.PolicyEffect[]
+  not?: Prisma.NestedEnumPolicyEffectWithAggregatesFilter<$PrismaModel> | $Enums.PolicyEffect
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPolicyEffectFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPolicyEffectFilter<$PrismaModel>
+}
+
+export type EnumSubjectTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SubjectType | Prisma.EnumSubjectTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SubjectType[]
+  notIn?: $Enums.SubjectType[]
+  not?: Prisma.NestedEnumSubjectTypeFilter<$PrismaModel> | $Enums.SubjectType
+}
+
+export type EnumSubjectTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SubjectType | Prisma.EnumSubjectTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SubjectType[]
+  notIn?: $Enums.SubjectType[]
+  not?: Prisma.NestedEnumSubjectTypeWithAggregatesFilter<$PrismaModel> | $Enums.SubjectType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSubjectTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSubjectTypeFilter<$PrismaModel>
+}
+
+export type EnumConditionOperatorFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConditionOperator | Prisma.EnumConditionOperatorFieldRefInput<$PrismaModel>
+  in?: $Enums.ConditionOperator[]
+  notIn?: $Enums.ConditionOperator[]
+  not?: Prisma.NestedEnumConditionOperatorFilter<$PrismaModel> | $Enums.ConditionOperator
+}
+
+export type EnumConditionOperatorWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConditionOperator | Prisma.EnumConditionOperatorFieldRefInput<$PrismaModel>
+  in?: $Enums.ConditionOperator[]
+  notIn?: $Enums.ConditionOperator[]
+  not?: Prisma.NestedEnumConditionOperatorWithAggregatesFilter<$PrismaModel> | $Enums.ConditionOperator
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumConditionOperatorFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumConditionOperatorFilter<$PrismaModel>
+}
+
 export type NestedBigIntFilter<$PrismaModel = never> = {
   equals?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
   in?: bigint[] | number[]
@@ -548,6 +599,57 @@ export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumPolicyEffectFilter<$PrismaModel = never> = {
+  equals?: $Enums.PolicyEffect | Prisma.EnumPolicyEffectFieldRefInput<$PrismaModel>
+  in?: $Enums.PolicyEffect[]
+  notIn?: $Enums.PolicyEffect[]
+  not?: Prisma.NestedEnumPolicyEffectFilter<$PrismaModel> | $Enums.PolicyEffect
+}
+
+export type NestedEnumPolicyEffectWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PolicyEffect | Prisma.EnumPolicyEffectFieldRefInput<$PrismaModel>
+  in?: $Enums.PolicyEffect[]
+  notIn?: $Enums.PolicyEffect[]
+  not?: Prisma.NestedEnumPolicyEffectWithAggregatesFilter<$PrismaModel> | $Enums.PolicyEffect
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPolicyEffectFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPolicyEffectFilter<$PrismaModel>
+}
+
+export type NestedEnumSubjectTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SubjectType | Prisma.EnumSubjectTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SubjectType[]
+  notIn?: $Enums.SubjectType[]
+  not?: Prisma.NestedEnumSubjectTypeFilter<$PrismaModel> | $Enums.SubjectType
+}
+
+export type NestedEnumSubjectTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SubjectType | Prisma.EnumSubjectTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SubjectType[]
+  notIn?: $Enums.SubjectType[]
+  not?: Prisma.NestedEnumSubjectTypeWithAggregatesFilter<$PrismaModel> | $Enums.SubjectType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSubjectTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSubjectTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumConditionOperatorFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConditionOperator | Prisma.EnumConditionOperatorFieldRefInput<$PrismaModel>
+  in?: $Enums.ConditionOperator[]
+  notIn?: $Enums.ConditionOperator[]
+  not?: Prisma.NestedEnumConditionOperatorFilter<$PrismaModel> | $Enums.ConditionOperator
+}
+
+export type NestedEnumConditionOperatorWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConditionOperator | Prisma.EnumConditionOperatorFieldRefInput<$PrismaModel>
+  in?: $Enums.ConditionOperator[]
+  notIn?: $Enums.ConditionOperator[]
+  not?: Prisma.NestedEnumConditionOperatorWithAggregatesFilter<$PrismaModel> | $Enums.ConditionOperator
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumConditionOperatorFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumConditionOperatorFilter<$PrismaModel>
 }
 
 

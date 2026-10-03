@@ -3,6 +3,7 @@ import { PrismaClient } from "../app/generated/prisma/client";
 import { hashPassword } from "../../platform/infrastructure/scrypt-password-hasher";
 import { ACTIONS, RESOURCES, ROLES } from "./data/catalogues";
 import { USERS } from "./data/users";
+import { seedDevelopers } from "./data/developers";
 
 const url = new URL(process.env.DATABASE_URL ?? "");
 const adapter = new PrismaMariaDb({
@@ -105,6 +106,8 @@ async function main() {
       },
     });
   }
+
+  await seedDevelopers(prisma);
 
   console.log("seed complete");
 }

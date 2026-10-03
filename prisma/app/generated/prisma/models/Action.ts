@@ -166,12 +166,14 @@ export type ActionWhereInput = {
   id?: Prisma.StringFilter<"Action"> | string
   code?: Prisma.StringFilter<"Action"> | string
   description?: Prisma.StringNullableFilter<"Action"> | string | null
+  policyTargets?: Prisma.PolicyTargetListRelationFilter
 }
 
 export type ActionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   code?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  policyTargets?: Prisma.PolicyTargetOrderByRelationAggregateInput
   _relevance?: Prisma.ActionOrderByRelevanceInput
 }
 
@@ -182,6 +184,7 @@ export type ActionWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ActionWhereInput[]
   NOT?: Prisma.ActionWhereInput | Prisma.ActionWhereInput[]
   description?: Prisma.StringNullableFilter<"Action"> | string | null
+  policyTargets?: Prisma.PolicyTargetListRelationFilter
 }, "id" | "code">
 
 export type ActionOrderByWithAggregationInput = {
@@ -206,24 +209,28 @@ export type ActionCreateInput = {
   id?: string
   code: string
   description?: string | null
+  policyTargets?: Prisma.PolicyTargetCreateNestedManyWithoutActionInput
 }
 
 export type ActionUncheckedCreateInput = {
   id?: string
   code: string
   description?: string | null
+  policyTargets?: Prisma.PolicyTargetUncheckedCreateNestedManyWithoutActionInput
 }
 
 export type ActionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  policyTargets?: Prisma.PolicyTargetUpdateManyWithoutActionNestedInput
 }
 
 export type ActionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  policyTargets?: Prisma.PolicyTargetUncheckedUpdateManyWithoutActionNestedInput
 }
 
 export type ActionCreateManyInput = {
@@ -268,12 +275,104 @@ export type ActionMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
 }
 
+export type ActionNullableScalarRelationFilter = {
+  is?: Prisma.ActionWhereInput | null
+  isNot?: Prisma.ActionWhereInput | null
+}
+
+export type ActionCreateNestedOneWithoutPolicyTargetsInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutPolicyTargetsInput, Prisma.ActionUncheckedCreateWithoutPolicyTargetsInput>
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutPolicyTargetsInput
+  connect?: Prisma.ActionWhereUniqueInput
+}
+
+export type ActionUpdateOneWithoutPolicyTargetsNestedInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutPolicyTargetsInput, Prisma.ActionUncheckedCreateWithoutPolicyTargetsInput>
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutPolicyTargetsInput
+  upsert?: Prisma.ActionUpsertWithoutPolicyTargetsInput
+  disconnect?: Prisma.ActionWhereInput | boolean
+  delete?: Prisma.ActionWhereInput | boolean
+  connect?: Prisma.ActionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ActionUpdateToOneWithWhereWithoutPolicyTargetsInput, Prisma.ActionUpdateWithoutPolicyTargetsInput>, Prisma.ActionUncheckedUpdateWithoutPolicyTargetsInput>
+}
+
+export type ActionCreateWithoutPolicyTargetsInput = {
+  id?: string
+  code: string
+  description?: string | null
+}
+
+export type ActionUncheckedCreateWithoutPolicyTargetsInput = {
+  id?: string
+  code: string
+  description?: string | null
+}
+
+export type ActionCreateOrConnectWithoutPolicyTargetsInput = {
+  where: Prisma.ActionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ActionCreateWithoutPolicyTargetsInput, Prisma.ActionUncheckedCreateWithoutPolicyTargetsInput>
+}
+
+export type ActionUpsertWithoutPolicyTargetsInput = {
+  update: Prisma.XOR<Prisma.ActionUpdateWithoutPolicyTargetsInput, Prisma.ActionUncheckedUpdateWithoutPolicyTargetsInput>
+  create: Prisma.XOR<Prisma.ActionCreateWithoutPolicyTargetsInput, Prisma.ActionUncheckedCreateWithoutPolicyTargetsInput>
+  where?: Prisma.ActionWhereInput
+}
+
+export type ActionUpdateToOneWithWhereWithoutPolicyTargetsInput = {
+  where?: Prisma.ActionWhereInput
+  data: Prisma.XOR<Prisma.ActionUpdateWithoutPolicyTargetsInput, Prisma.ActionUncheckedUpdateWithoutPolicyTargetsInput>
+}
+
+export type ActionUpdateWithoutPolicyTargetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ActionUncheckedUpdateWithoutPolicyTargetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+
+/**
+ * Count Type ActionCountOutputType
+ */
+
+export type ActionCountOutputType = {
+  policyTargets: number
+}
+
+export type ActionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  policyTargets?: boolean | ActionCountOutputTypeCountPolicyTargetsArgs
+}
+
+/**
+ * ActionCountOutputType without action
+ */
+export type ActionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ActionCountOutputType
+   */
+  select?: Prisma.ActionCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ActionCountOutputType without action
+ */
+export type ActionCountOutputTypeCountPolicyTargetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PolicyTargetWhereInput
+}
 
 
 export type ActionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   code?: boolean
   description?: boolean
+  policyTargets?: boolean | Prisma.Action$policyTargetsArgs<ExtArgs>
+  _count?: boolean | Prisma.ActionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["action"]>
 
 
@@ -285,10 +384,16 @@ export type ActionSelectScalar = {
 }
 
 export type ActionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "description", ExtArgs["result"]["action"]>
+export type ActionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  policyTargets?: boolean | Prisma.Action$policyTargetsArgs<ExtArgs>
+  _count?: boolean | Prisma.ActionCountOutputTypeDefaultArgs<ExtArgs>
+}
 
 export type $ActionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Action"
-  objects: {}
+  objects: {
+    policyTargets: Prisma.$PolicyTargetPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     code: string
@@ -633,6 +738,7 @@ readonly fields: ActionFieldRefs;
  */
 export interface Prisma__ActionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  policyTargets<T extends Prisma.Action$policyTargetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Action$policyTargetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PolicyTargetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -682,6 +788,10 @@ export type ActionFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   omit?: Prisma.ActionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionInclude<ExtArgs> | null
+  /**
    * Filter, which Action to fetch.
    */
   where: Prisma.ActionWhereUniqueInput
@@ -700,6 +810,10 @@ export type ActionFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.ActionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionInclude<ExtArgs> | null
+  /**
    * Filter, which Action to fetch.
    */
   where: Prisma.ActionWhereUniqueInput
@@ -717,6 +831,10 @@ export type ActionFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Action
    */
   omit?: Prisma.ActionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionInclude<ExtArgs> | null
   /**
    * Filter, which Action to fetch.
    */
@@ -766,6 +884,10 @@ export type ActionFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.ActionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionInclude<ExtArgs> | null
+  /**
    * Filter, which Action to fetch.
    */
   where?: Prisma.ActionWhereInput
@@ -813,6 +935,10 @@ export type ActionFindManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Action
    */
   omit?: Prisma.ActionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionInclude<ExtArgs> | null
   /**
    * Filter, which Actions to fetch.
    */
@@ -862,6 +988,10 @@ export type ActionCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    */
   omit?: Prisma.ActionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionInclude<ExtArgs> | null
+  /**
    * The data needed to create a Action.
    */
   data: Prisma.XOR<Prisma.ActionCreateInput, Prisma.ActionUncheckedCreateInput>
@@ -890,6 +1020,10 @@ export type ActionUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the Action
    */
   omit?: Prisma.ActionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionInclude<ExtArgs> | null
   /**
    * The data needed to update a Action.
    */
@@ -931,6 +1065,10 @@ export type ActionUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    */
   omit?: Prisma.ActionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionInclude<ExtArgs> | null
+  /**
    * The filter to search for the Action to update in case it exists.
    */
   where: Prisma.ActionWhereUniqueInput
@@ -957,6 +1095,10 @@ export type ActionDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    */
   omit?: Prisma.ActionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionInclude<ExtArgs> | null
+  /**
    * Filter which Action to delete.
    */
   where: Prisma.ActionWhereUniqueInput
@@ -977,6 +1119,30 @@ export type ActionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
+ * Action.policyTargets
+ */
+export type Action$policyTargetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PolicyTarget
+   */
+  select?: Prisma.PolicyTargetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PolicyTarget
+   */
+  omit?: Prisma.PolicyTargetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PolicyTargetInclude<ExtArgs> | null
+  where?: Prisma.PolicyTargetWhereInput
+  orderBy?: Prisma.PolicyTargetOrderByWithRelationInput | Prisma.PolicyTargetOrderByWithRelationInput[]
+  cursor?: Prisma.PolicyTargetWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PolicyTargetScalarFieldEnum | Prisma.PolicyTargetScalarFieldEnum[]
+}
+
+/**
  * Action without action
  */
 export type ActionDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -988,4 +1154,8 @@ export type ActionDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Action
    */
   omit?: Prisma.ActionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionInclude<ExtArgs> | null
 }

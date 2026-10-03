@@ -67,3 +67,23 @@ export type UserProfile = Prisma.UserProfileModel
  * 
  */
 export type Session = Prisma.SessionModel
+/**
+ * Model Policy
+ * 
+ */
+export type Policy = Prisma.PolicyModel
+/**
+ * Model PolicySubject
+ * 
+ */
+export type PolicySubject = Prisma.PolicySubjectModel
+/**
+ * Model PolicyTarget
+ * 
+ */
+export type PolicyTarget = Prisma.PolicyTargetModel
+/**
+ * Model PolicyCondition
+ * 
+ */
+export type PolicyCondition = Prisma.PolicyConditionModel

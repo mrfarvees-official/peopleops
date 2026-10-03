@@ -1,0 +1,94 @@
+enum PolicyEffect {
+  allow
+  deny
+}
+
+enum SubjectType {
+  any
+  role
+  user
+}
+
+enum ConditionOperator {
+  eq
+  neq
+  in
+  not_in
+  gt
+  gte
+  lt
+  lte
+  contains
+  exists
+}
+
+model Policy {
+  id          String       @id @default(uuid()) @db.VarChar(36)
+  tenantId    String?      @db.VarChar(36) // null = global/system policy
+  code        String       @db.VarChar(64)
+  name        String       @db.VarChar(128)
+  description String?      @db.VarChar(255)
+  effect      PolicyEffect
+  isActive    Boolean      @default(true)
+  isSystem    Boolean      @default(false) // seeded; managed by the seeder
+  version     Int          @default(1)
+  createdAt   DateTime     @default(now()) @db.DateTime(3)
+  updatedAt   DateTime     @updatedAt @db.DateTime(3)
+
+  tenant     Tenant?           @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  subjects   PolicySubject[]
+  targets    PolicyTarget[]
+  conditions PolicyCondition[]
+
+  @@unique([tenantId, code])
+  @@index([tenantId, isActive])
+  @@map("platform_policy")
+}
+
+model PolicySubject {
+  id       String      @id @default(uuid()) @db.VarChar(36)
+  policyId String      @db.VarChar(36)
+  type     SubjectType
+  roleId   String?     @db.VarChar(36)
+  userId   String?     @db.VarChar(36)
+
+  policy Policy @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  role   Role?  @relation(fields: [roleId], references: [id], onDelete: Restrict)
+  user   User?  @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@index([policyId])
+  @@index([roleId])
+  @@index([userId])
+  @@map("platform_policy_subject")
+}
+
+// One row per (action, resource) pair. null = any.
+model PolicyTarget {
+  id         String  @id @default(uuid()) @db.VarChar(36)
+  policyId   String  @db.VarChar(36)
+  actionId   String? @db.VarChar(36)
+  resourceId String? @db.VarChar(36)
+
+  policy   Policy    @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  action   Action?   @relation(fields: [actionId], references: [id], onDelete: Restrict)
+  resource Resource? @relation(fields: [resourceId], references: [id], onDelete: Restrict)
+
+  @@index([policyId])
+  @@index([actionId, resourceId])
+  @@map("platform_policy_target")
+}
+
+model PolicyCondition {
+  id        String            @id @default(uuid()) @db.VarChar(36)
+  policyId  String            @db.VarChar(36)
+  attribute String            @db.VarChar(128) // e.g. "resource.ownerId"
+  operator  ConditionOperator
+  value     Json? // literal operand
+  ref       String?           @db.VarChar(128) // OR another attribute, e.g. "subject.id"
+  position  Int               @default(0)
+
+  policy Policy @relation(fields: [policyId], references: [id], onDelete: Cascade)
+
+  @@index([policyId])
+  @@map("platform_policy_condition")
+}

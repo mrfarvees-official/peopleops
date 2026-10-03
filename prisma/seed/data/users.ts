@@ -9,3 +9,7 @@ export const USERS = [
   { role: "employee", tenant: "demo", first: "Kasun", last: "Bandara" },
   { role: "auditor", tenant: "demo", first: "Anya", last: "Rodrigo" },
 ] as const;
+
+export const DEVELOPERS = [
+  { email: "farvees@platform.com", tenant: "platform", first: "Farvees", last: "" },
+] as const;

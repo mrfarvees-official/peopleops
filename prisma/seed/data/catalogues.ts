@@ -1,4 +1,5 @@
 export const ROLES = [
+  { code: "system_developer", name: "System developer" },
   { code: "super_admin", name: "Super admin" },
   { code: "hr_admin", name: "HR admin" },
   { code: "hr_manager", name: "HR manager" },

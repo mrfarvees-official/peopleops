@@ -166,12 +166,14 @@ export type ResourceWhereInput = {
   id?: Prisma.StringFilter<"Resource"> | string
   code?: Prisma.StringFilter<"Resource"> | string
   description?: Prisma.StringNullableFilter<"Resource"> | string | null
+  policyTargets?: Prisma.PolicyTargetListRelationFilter
 }
 
 export type ResourceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   code?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  policyTargets?: Prisma.PolicyTargetOrderByRelationAggregateInput
   _relevance?: Prisma.ResourceOrderByRelevanceInput
 }
 
@@ -182,6 +184,7 @@ export type ResourceWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ResourceWhereInput[]
   NOT?: Prisma.ResourceWhereInput | Prisma.ResourceWhereInput[]
   description?: Prisma.StringNullableFilter<"Resource"> | string | null
+  policyTargets?: Prisma.PolicyTargetListRelationFilter
 }, "id" | "code">
 
 export type ResourceOrderByWithAggregationInput = {
@@ -206,24 +209,28 @@ export type ResourceCreateInput = {
   id?: string
   code: string
   description?: string | null
+  policyTargets?: Prisma.PolicyTargetCreateNestedManyWithoutResourceInput
 }
 
 export type ResourceUncheckedCreateInput = {
   id?: string
   code: string
   description?: string | null
+  policyTargets?: Prisma.PolicyTargetUncheckedCreateNestedManyWithoutResourceInput
 }
 
 export type ResourceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  policyTargets?: Prisma.PolicyTargetUpdateManyWithoutResourceNestedInput
 }
 
 export type ResourceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  policyTargets?: Prisma.PolicyTargetUncheckedUpdateManyWithoutResourceNestedInput
 }
 
 export type ResourceCreateManyInput = {
@@ -268,12 +275,104 @@ export type ResourceMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
 }
 
+export type ResourceNullableScalarRelationFilter = {
+  is?: Prisma.ResourceWhereInput | null
+  isNot?: Prisma.ResourceWhereInput | null
+}
+
+export type ResourceCreateNestedOneWithoutPolicyTargetsInput = {
+  create?: Prisma.XOR<Prisma.ResourceCreateWithoutPolicyTargetsInput, Prisma.ResourceUncheckedCreateWithoutPolicyTargetsInput>
+  connectOrCreate?: Prisma.ResourceCreateOrConnectWithoutPolicyTargetsInput
+  connect?: Prisma.ResourceWhereUniqueInput
+}
+
+export type ResourceUpdateOneWithoutPolicyTargetsNestedInput = {
+  create?: Prisma.XOR<Prisma.ResourceCreateWithoutPolicyTargetsInput, Prisma.ResourceUncheckedCreateWithoutPolicyTargetsInput>
+  connectOrCreate?: Prisma.ResourceCreateOrConnectWithoutPolicyTargetsInput
+  upsert?: Prisma.ResourceUpsertWithoutPolicyTargetsInput
+  disconnect?: Prisma.ResourceWhereInput | boolean
+  delete?: Prisma.ResourceWhereInput | boolean
+  connect?: Prisma.ResourceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ResourceUpdateToOneWithWhereWithoutPolicyTargetsInput, Prisma.ResourceUpdateWithoutPolicyTargetsInput>, Prisma.ResourceUncheckedUpdateWithoutPolicyTargetsInput>
+}
+
+export type ResourceCreateWithoutPolicyTargetsInput = {
+  id?: string
+  code: string
+  description?: string | null
+}
+
+export type ResourceUncheckedCreateWithoutPolicyTargetsInput = {
+  id?: string
+  code: string
+  description?: string | null
+}
+
+export type ResourceCreateOrConnectWithoutPolicyTargetsInput = {
+  where: Prisma.ResourceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ResourceCreateWithoutPolicyTargetsInput, Prisma.ResourceUncheckedCreateWithoutPolicyTargetsInput>
+}
+
+export type ResourceUpsertWithoutPolicyTargetsInput = {
+  update: Prisma.XOR<Prisma.ResourceUpdateWithoutPolicyTargetsInput, Prisma.ResourceUncheckedUpdateWithoutPolicyTargetsInput>
+  create: Prisma.XOR<Prisma.ResourceCreateWithoutPolicyTargetsInput, Prisma.ResourceUncheckedCreateWithoutPolicyTargetsInput>
+  where?: Prisma.ResourceWhereInput
+}
+
+export type ResourceUpdateToOneWithWhereWithoutPolicyTargetsInput = {
+  where?: Prisma.ResourceWhereInput
+  data: Prisma.XOR<Prisma.ResourceUpdateWithoutPolicyTargetsInput, Prisma.ResourceUncheckedUpdateWithoutPolicyTargetsInput>
+}
+
+export type ResourceUpdateWithoutPolicyTargetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ResourceUncheckedUpdateWithoutPolicyTargetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+
+/**
+ * Count Type ResourceCountOutputType
+ */
+
+export type ResourceCountOutputType = {
+  policyTargets: number
+}
+
+export type ResourceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  policyTargets?: boolean | ResourceCountOutputTypeCountPolicyTargetsArgs
+}
+
+/**
+ * ResourceCountOutputType without action
+ */
+export type ResourceCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ResourceCountOutputType
+   */
+  select?: Prisma.ResourceCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ResourceCountOutputType without action
+ */
+export type ResourceCountOutputTypeCountPolicyTargetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PolicyTargetWhereInput
+}
 
 
 export type ResourceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   code?: boolean
   description?: boolean
+  policyTargets?: boolean | Prisma.Resource$policyTargetsArgs<ExtArgs>
+  _count?: boolean | Prisma.ResourceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["resource"]>
 
 
@@ -285,10 +384,16 @@ export type ResourceSelectScalar = {
 }
 
 export type ResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "description", ExtArgs["result"]["resource"]>
+export type ResourceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  policyTargets?: boolean | Prisma.Resource$policyTargetsArgs<ExtArgs>
+  _count?: boolean | Prisma.ResourceCountOutputTypeDefaultArgs<ExtArgs>
+}
 
 export type $ResourcePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Resource"
-  objects: {}
+  objects: {
+    policyTargets: Prisma.$PolicyTargetPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     code: string
@@ -633,6 +738,7 @@ readonly fields: ResourceFieldRefs;
  */
 export interface Prisma__ResourceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  policyTargets<T extends Prisma.Resource$policyTargetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$policyTargetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PolicyTargetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -682,6 +788,10 @@ export type ResourceFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   omit?: Prisma.ResourceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ResourceInclude<ExtArgs> | null
+  /**
    * Filter, which Resource to fetch.
    */
   where: Prisma.ResourceWhereUniqueInput
@@ -700,6 +810,10 @@ export type ResourceFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.ResourceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ResourceInclude<ExtArgs> | null
+  /**
    * Filter, which Resource to fetch.
    */
   where: Prisma.ResourceWhereUniqueInput
@@ -717,6 +831,10 @@ export type ResourceFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the Resource
    */
   omit?: Prisma.ResourceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ResourceInclude<ExtArgs> | null
   /**
    * Filter, which Resource to fetch.
    */
@@ -766,6 +884,10 @@ export type ResourceFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.ResourceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ResourceInclude<ExtArgs> | null
+  /**
    * Filter, which Resource to fetch.
    */
   where?: Prisma.ResourceWhereInput
@@ -813,6 +935,10 @@ export type ResourceFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Resource
    */
   omit?: Prisma.ResourceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ResourceInclude<ExtArgs> | null
   /**
    * Filter, which Resources to fetch.
    */
@@ -862,6 +988,10 @@ export type ResourceCreateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.ResourceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ResourceInclude<ExtArgs> | null
+  /**
    * The data needed to create a Resource.
    */
   data: Prisma.XOR<Prisma.ResourceCreateInput, Prisma.ResourceUncheckedCreateInput>
@@ -890,6 +1020,10 @@ export type ResourceUpdateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Resource
    */
   omit?: Prisma.ResourceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ResourceInclude<ExtArgs> | null
   /**
    * The data needed to update a Resource.
    */
@@ -931,6 +1065,10 @@ export type ResourceUpsertArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.ResourceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ResourceInclude<ExtArgs> | null
+  /**
    * The filter to search for the Resource to update in case it exists.
    */
   where: Prisma.ResourceWhereUniqueInput
@@ -957,6 +1095,10 @@ export type ResourceDeleteArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.ResourceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ResourceInclude<ExtArgs> | null
+  /**
    * Filter which Resource to delete.
    */
   where: Prisma.ResourceWhereUniqueInput
@@ -977,6 +1119,30 @@ export type ResourceDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * Resource.policyTargets
+ */
+export type Resource$policyTargetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PolicyTarget
+   */
+  select?: Prisma.PolicyTargetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PolicyTarget
+   */
+  omit?: Prisma.PolicyTargetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PolicyTargetInclude<ExtArgs> | null
+  where?: Prisma.PolicyTargetWhereInput
+  orderBy?: Prisma.PolicyTargetOrderByWithRelationInput | Prisma.PolicyTargetOrderByWithRelationInput[]
+  cursor?: Prisma.PolicyTargetWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PolicyTargetScalarFieldEnum | Prisma.PolicyTargetScalarFieldEnum[]
+}
+
+/**
  * Resource without action
  */
 export type ResourceDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -988,4 +1154,8 @@ export type ResourceDefaultArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Resource
    */
   omit?: Prisma.ResourceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ResourceInclude<ExtArgs> | null
 }

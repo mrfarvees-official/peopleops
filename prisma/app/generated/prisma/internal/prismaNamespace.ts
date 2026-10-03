@@ -406,7 +406,11 @@ export const ModelName = {
   Resource: 'Resource',
   TenantProfile: 'TenantProfile',
   UserProfile: 'UserProfile',
-  Session: 'Session'
+  Session: 'Session',
+  Policy: 'Policy',
+  PolicySubject: 'PolicySubject',
+  PolicyTarget: 'PolicyTarget',
+  PolicyCondition: 'PolicyCondition'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -422,7 +426,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "auditLog" | "tenant" | "user" | "role" | "userRole" | "action" | "resource" | "tenantProfile" | "userProfile" | "session"
+    modelProps: "auditLog" | "tenant" | "user" | "role" | "userRole" | "action" | "resource" | "tenantProfile" | "userProfile" | "session" | "policy" | "policySubject" | "policyTarget" | "policyCondition"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1086,6 +1090,270 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Policy: {
+      payload: Prisma.$PolicyPayload<ExtArgs>
+      fields: Prisma.PolicyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PolicyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PolicyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>
+        }
+        findFirst: {
+          args: Prisma.PolicyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PolicyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>
+        }
+        findMany: {
+          args: Prisma.PolicyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>[]
+        }
+        create: {
+          args: Prisma.PolicyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>
+        }
+        createMany: {
+          args: Prisma.PolicyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.PolicyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>
+        }
+        update: {
+          args: Prisma.PolicyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>
+        }
+        deleteMany: {
+          args: Prisma.PolicyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PolicyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.PolicyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>
+        }
+        aggregate: {
+          args: Prisma.PolicyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePolicy>
+        }
+        groupBy: {
+          args: Prisma.PolicyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PolicyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PolicyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PolicyCountAggregateOutputType> | number
+        }
+      }
+    }
+    PolicySubject: {
+      payload: Prisma.$PolicySubjectPayload<ExtArgs>
+      fields: Prisma.PolicySubjectFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PolicySubjectFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicySubjectPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PolicySubjectFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicySubjectPayload>
+        }
+        findFirst: {
+          args: Prisma.PolicySubjectFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicySubjectPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PolicySubjectFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicySubjectPayload>
+        }
+        findMany: {
+          args: Prisma.PolicySubjectFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicySubjectPayload>[]
+        }
+        create: {
+          args: Prisma.PolicySubjectCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicySubjectPayload>
+        }
+        createMany: {
+          args: Prisma.PolicySubjectCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.PolicySubjectDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicySubjectPayload>
+        }
+        update: {
+          args: Prisma.PolicySubjectUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicySubjectPayload>
+        }
+        deleteMany: {
+          args: Prisma.PolicySubjectDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PolicySubjectUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.PolicySubjectUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicySubjectPayload>
+        }
+        aggregate: {
+          args: Prisma.PolicySubjectAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePolicySubject>
+        }
+        groupBy: {
+          args: Prisma.PolicySubjectGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PolicySubjectGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PolicySubjectCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PolicySubjectCountAggregateOutputType> | number
+        }
+      }
+    }
+    PolicyTarget: {
+      payload: Prisma.$PolicyTargetPayload<ExtArgs>
+      fields: Prisma.PolicyTargetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PolicyTargetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyTargetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PolicyTargetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyTargetPayload>
+        }
+        findFirst: {
+          args: Prisma.PolicyTargetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyTargetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PolicyTargetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyTargetPayload>
+        }
+        findMany: {
+          args: Prisma.PolicyTargetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyTargetPayload>[]
+        }
+        create: {
+          args: Prisma.PolicyTargetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyTargetPayload>
+        }
+        createMany: {
+          args: Prisma.PolicyTargetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.PolicyTargetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyTargetPayload>
+        }
+        update: {
+          args: Prisma.PolicyTargetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyTargetPayload>
+        }
+        deleteMany: {
+          args: Prisma.PolicyTargetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PolicyTargetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.PolicyTargetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyTargetPayload>
+        }
+        aggregate: {
+          args: Prisma.PolicyTargetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePolicyTarget>
+        }
+        groupBy: {
+          args: Prisma.PolicyTargetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PolicyTargetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PolicyTargetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PolicyTargetCountAggregateOutputType> | number
+        }
+      }
+    }
+    PolicyCondition: {
+      payload: Prisma.$PolicyConditionPayload<ExtArgs>
+      fields: Prisma.PolicyConditionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PolicyConditionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyConditionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PolicyConditionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyConditionPayload>
+        }
+        findFirst: {
+          args: Prisma.PolicyConditionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyConditionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PolicyConditionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyConditionPayload>
+        }
+        findMany: {
+          args: Prisma.PolicyConditionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyConditionPayload>[]
+        }
+        create: {
+          args: Prisma.PolicyConditionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyConditionPayload>
+        }
+        createMany: {
+          args: Prisma.PolicyConditionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.PolicyConditionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyConditionPayload>
+        }
+        update: {
+          args: Prisma.PolicyConditionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyConditionPayload>
+        }
+        deleteMany: {
+          args: Prisma.PolicyConditionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PolicyConditionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.PolicyConditionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyConditionPayload>
+        }
+        aggregate: {
+          args: Prisma.PolicyConditionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePolicyCondition>
+        }
+        groupBy: {
+          args: Prisma.PolicyConditionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PolicyConditionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PolicyConditionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PolicyConditionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1270,6 +1538,57 @@ export const SessionScalarFieldEnum = {
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
 
 
+export const PolicyScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  effect: 'effect',
+  isActive: 'isActive',
+  isSystem: 'isSystem',
+  version: 'version',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PolicyScalarFieldEnum = (typeof PolicyScalarFieldEnum)[keyof typeof PolicyScalarFieldEnum]
+
+
+export const PolicySubjectScalarFieldEnum = {
+  id: 'id',
+  policyId: 'policyId',
+  type: 'type',
+  roleId: 'roleId',
+  userId: 'userId'
+} as const
+
+export type PolicySubjectScalarFieldEnum = (typeof PolicySubjectScalarFieldEnum)[keyof typeof PolicySubjectScalarFieldEnum]
+
+
+export const PolicyTargetScalarFieldEnum = {
+  id: 'id',
+  policyId: 'policyId',
+  actionId: 'actionId',
+  resourceId: 'resourceId'
+} as const
+
+export type PolicyTargetScalarFieldEnum = (typeof PolicyTargetScalarFieldEnum)[keyof typeof PolicyTargetScalarFieldEnum]
+
+
+export const PolicyConditionScalarFieldEnum = {
+  id: 'id',
+  policyId: 'policyId',
+  attribute: 'attribute',
+  operator: 'operator',
+  value: 'value',
+  ref: 'ref',
+  position: 'position'
+} as const
+
+export type PolicyConditionScalarFieldEnum = (typeof PolicyConditionScalarFieldEnum)[keyof typeof PolicyConditionScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1432,6 +1751,47 @@ export const SessionOrderByRelevanceFieldEnum = {
 export type SessionOrderByRelevanceFieldEnum = (typeof SessionOrderByRelevanceFieldEnum)[keyof typeof SessionOrderByRelevanceFieldEnum]
 
 
+export const PolicyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  description: 'description'
+} as const
+
+export type PolicyOrderByRelevanceFieldEnum = (typeof PolicyOrderByRelevanceFieldEnum)[keyof typeof PolicyOrderByRelevanceFieldEnum]
+
+
+export const PolicySubjectOrderByRelevanceFieldEnum = {
+  id: 'id',
+  policyId: 'policyId',
+  roleId: 'roleId',
+  userId: 'userId'
+} as const
+
+export type PolicySubjectOrderByRelevanceFieldEnum = (typeof PolicySubjectOrderByRelevanceFieldEnum)[keyof typeof PolicySubjectOrderByRelevanceFieldEnum]
+
+
+export const PolicyTargetOrderByRelevanceFieldEnum = {
+  id: 'id',
+  policyId: 'policyId',
+  actionId: 'actionId',
+  resourceId: 'resourceId'
+} as const
+
+export type PolicyTargetOrderByRelevanceFieldEnum = (typeof PolicyTargetOrderByRelevanceFieldEnum)[keyof typeof PolicyTargetOrderByRelevanceFieldEnum]
+
+
+export const PolicyConditionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  policyId: 'policyId',
+  attribute: 'attribute',
+  ref: 'ref'
+} as const
+
+export type PolicyConditionOrderByRelevanceFieldEnum = (typeof PolicyConditionOrderByRelevanceFieldEnum)[keyof typeof PolicyConditionOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -1498,6 +1858,27 @@ export type EnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'PolicyEffect'
+ */
+export type EnumPolicyEffectFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PolicyEffect'>
+    
+
+
+/**
+ * Reference to a field of type 'SubjectType'
+ */
+export type EnumSubjectTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubjectType'>
+    
+
+
+/**
+ * Reference to a field of type 'ConditionOperator'
+ */
+export type EnumConditionOperatorFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConditionOperator'>
     
 
 
@@ -1668,6 +2049,10 @@ export type GlobalOmitConfig = {
   tenantProfile?: Prisma.TenantProfileOmit
   userProfile?: Prisma.UserProfileOmit
   session?: Prisma.SessionOmit
+  policy?: Prisma.PolicyOmit
+  policySubject?: Prisma.PolicySubjectOmit
+  policyTarget?: Prisma.PolicyTargetOmit
+  policyCondition?: Prisma.PolicyConditionOmit
 }
 
 /* Types for Logging */
