@@ -16,13 +16,24 @@ export interface AuditEntry {
 
 const SKIPPED = /\.(view|viewAny)$/;
 
-export function shouldAudit(entry: AuditEntry): boolean {
-  if (!SKIPPED.test(entry.action)) return true;
-  return entry.outcome === "denied";
+/** True for a successful view or list entry: the only kind the "log views" setting controls. */
+export function isQuietViewEntry(entry: AuditEntry): boolean {
+  return SKIPPED.test(entry.action) && entry.outcome !== "denied";
+}
+
+/**
+ * Views and lists happen on every page load, so by default they are not
+ * recorded (each one would be a database write). Denied attempts always are.
+ * `logViews` comes from the audit.log_views setting.
+ */
+export function shouldAudit(entry: AuditEntry, logViews = false): boolean {
+  return isQuietViewEntry(entry) ? logViews : true;
 }
 
 const SENSITIVE = new Set([
   "salary",
+  "monthlySalary",
+  "expectedSalary",
   "nationalId",
   "password",
   "passwordHash",

@@ -5,6 +5,7 @@ import { ACTIONS, RESOURCES, ROLES } from "./data/catalogues";
 import { USERS } from "./data/users";
 import { seedDevelopers } from "./data/developers";
 import { seedPolicies } from "./pbac";
+import { seedHr } from "./hr";
 
 const url = new URL(process.env.DATABASE_URL ?? "");
 const adapter = new PrismaMariaDb({
@@ -112,6 +113,9 @@ async function main() {
   }
 
   await seedDevelopers(prisma);
+
+  // demo HR data (org units, employees, leave, attendance, candidates, payroll)
+  await seedHr(prisma, tenants.get("demo")!);
 
   console.log("seed complete");
 }

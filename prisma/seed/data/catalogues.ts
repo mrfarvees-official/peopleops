@@ -12,10 +12,10 @@ export const ROLES = [
 
 export const ACTIONS = [
   "view", "viewAny", "create", "update", "delete", "restore",
-  "submit", "approve", "reject", "lock", "publish", "export",
+  "submit", "approve", "reject", "lock", "publish", "export", "import",
 ] as const;
 
 export const RESOURCES = [
   "tenant", "user", "role", "policy", "subject", "condition", "permission", "audit_log", "org_unit", "employee",
-  "leave_request", "attendance", "payroll_run", "payslip", "candidate", "report",
+  "leave_request", "attendance", "payroll_run", "payslip", "candidate", "report", "setting", "backup", "leave_type",
 ] as const;

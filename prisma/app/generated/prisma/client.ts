@@ -47,6 +47,51 @@ export { Prisma }
  */
 export type AuditLog = Prisma.AuditLogModel
 /**
+ * Model Backup
+ * 
+ */
+export type Backup = Prisma.BackupModel
+/**
+ * Model OrgUnit
+ * 
+ */
+export type OrgUnit = Prisma.OrgUnitModel
+/**
+ * Model Employee
+ * 
+ */
+export type Employee = Prisma.EmployeeModel
+/**
+ * Model LeaveType
+ * 
+ */
+export type LeaveType = Prisma.LeaveTypeModel
+/**
+ * Model LeaveRequest
+ * 
+ */
+export type LeaveRequest = Prisma.LeaveRequestModel
+/**
+ * Model Attendance
+ * 
+ */
+export type Attendance = Prisma.AttendanceModel
+/**
+ * Model Candidate
+ * 
+ */
+export type Candidate = Prisma.CandidateModel
+/**
+ * Model PayrollRun
+ * 
+ */
+export type PayrollRun = Prisma.PayrollRunModel
+/**
+ * Model Payslip
+ * 
+ */
+export type Payslip = Prisma.PayslipModel
+/**
  * Model Tenant
  * 
  */
@@ -111,3 +156,8 @@ export type PolicyTarget = Prisma.PolicyTargetModel
  * 
  */
 export type PolicyCondition = Prisma.PolicyConditionModel
+/**
+ * Model Setting
+ * 
+ */
+export type Setting = Prisma.SettingModel

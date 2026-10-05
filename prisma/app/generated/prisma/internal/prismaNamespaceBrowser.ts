@@ -52,6 +52,15 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   AuditLog: 'AuditLog',
+  Backup: 'Backup',
+  OrgUnit: 'OrgUnit',
+  Employee: 'Employee',
+  LeaveType: 'LeaveType',
+  LeaveRequest: 'LeaveRequest',
+  Attendance: 'Attendance',
+  Candidate: 'Candidate',
+  PayrollRun: 'PayrollRun',
+  Payslip: 'Payslip',
   Tenant: 'Tenant',
   User: 'User',
   Role: 'Role',
@@ -64,7 +73,8 @@ export const ModelName = {
   Policy: 'Policy',
   PolicySubject: 'PolicySubject',
   PolicyTarget: 'PolicyTarget',
-  PolicyCondition: 'PolicyCondition'
+  PolicyCondition: 'PolicyCondition',
+  Setting: 'Setting'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -100,6 +110,186 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const BackupScalarFieldEnum = {
+  id: 'id',
+  kind: 'kind',
+  scope: 'scope',
+  tenantId: 'tenantId',
+  status: 'status',
+  storageKey: 'storageKey',
+  sizeBytes: 'sizeBytes',
+  checksum: 'checksum',
+  tables: 'tables',
+  note: 'note',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt'
+} as const
+
+export type BackupScalarFieldEnum = (typeof BackupScalarFieldEnum)[keyof typeof BackupScalarFieldEnum]
+
+
+export const OrgUnitScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  parentId: 'parentId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type OrgUnitScalarFieldEnum = (typeof OrgUnitScalarFieldEnum)[keyof typeof OrgUnitScalarFieldEnum]
+
+
+export const EmployeeScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  userId: 'userId',
+  employeeNo: 'employeeNo',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  phone: 'phone',
+  jobTitle: 'jobTitle',
+  orgUnitId: 'orgUnitId',
+  managerId: 'managerId',
+  managerUserId: 'managerUserId',
+  employmentType: 'employmentType',
+  status: 'status',
+  hireDate: 'hireDate',
+  terminationDate: 'terminationDate',
+  monthlySalary: 'monthlySalary',
+  nationalId: 'nationalId',
+  address: 'address',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
+
+
+export const LeaveTypeScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  daysPerYear: 'daysPerYear',
+  isPaid: 'isPaid',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type LeaveTypeScalarFieldEnum = (typeof LeaveTypeScalarFieldEnum)[keyof typeof LeaveTypeScalarFieldEnum]
+
+
+export const LeaveRequestScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  employeeId: 'employeeId',
+  ownerUserId: 'ownerUserId',
+  managerUserId: 'managerUserId',
+  leaveTypeId: 'leaveTypeId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  days: 'days',
+  reason: 'reason',
+  status: 'status',
+  decidedBy: 'decidedBy',
+  decidedAt: 'decidedAt',
+  decisionNote: 'decisionNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type LeaveRequestScalarFieldEnum = (typeof LeaveRequestScalarFieldEnum)[keyof typeof LeaveRequestScalarFieldEnum]
+
+
+export const AttendanceScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  employeeId: 'employeeId',
+  ownerUserId: 'ownerUserId',
+  managerUserId: 'managerUserId',
+  date: 'date',
+  clockIn: 'clockIn',
+  clockOut: 'clockOut',
+  hours: 'hours',
+  status: 'status',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type AttendanceScalarFieldEnum = (typeof AttendanceScalarFieldEnum)[keyof typeof AttendanceScalarFieldEnum]
+
+
+export const CandidateScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  phone: 'phone',
+  position: 'position',
+  stage: 'stage',
+  source: 'source',
+  expectedSalary: 'expectedSalary',
+  appliedAt: 'appliedAt',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type CandidateScalarFieldEnum = (typeof CandidateScalarFieldEnum)[keyof typeof CandidateScalarFieldEnum]
+
+
+export const PayrollRunScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  period: 'period',
+  status: 'status',
+  employeeCount: 'employeeCount',
+  totalGross: 'totalGross',
+  totalDeductions: 'totalDeductions',
+  totalNet: 'totalNet',
+  createdBy: 'createdBy',
+  lockedAt: 'lockedAt',
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type PayrollRunScalarFieldEnum = (typeof PayrollRunScalarFieldEnum)[keyof typeof PayrollRunScalarFieldEnum]
+
+
+export const PayslipScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  runId: 'runId',
+  employeeId: 'employeeId',
+  ownerUserId: 'ownerUserId',
+  managerUserId: 'managerUserId',
+  status: 'status',
+  gross: 'gross',
+  deductions: 'deductions',
+  net: 'net',
+  details: 'details',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PayslipScalarFieldEnum = (typeof PayslipScalarFieldEnum)[keyof typeof PayslipScalarFieldEnum]
 
 
 export const TenantScalarFieldEnum = {
@@ -279,6 +469,17 @@ export const PolicyConditionScalarFieldEnum = {
 export type PolicyConditionScalarFieldEnum = (typeof PolicyConditionScalarFieldEnum)[keyof typeof PolicyConditionScalarFieldEnum]
 
 
+export const SettingScalarFieldEnum = {
+  key: 'key',
+  value: 'value',
+  updatedBy: 'updatedBy',
+  version: 'version',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SettingScalarFieldEnum = (typeof SettingScalarFieldEnum)[keyof typeof SettingScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -293,6 +494,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const JsonNullValueFilter = {
@@ -332,6 +540,133 @@ export const AuditLogOrderByRelevanceFieldEnum = {
 } as const
 
 export type AuditLogOrderByRelevanceFieldEnum = (typeof AuditLogOrderByRelevanceFieldEnum)[keyof typeof AuditLogOrderByRelevanceFieldEnum]
+
+
+export const BackupOrderByRelevanceFieldEnum = {
+  id: 'id',
+  kind: 'kind',
+  scope: 'scope',
+  tenantId: 'tenantId',
+  status: 'status',
+  storageKey: 'storageKey',
+  checksum: 'checksum',
+  note: 'note',
+  createdBy: 'createdBy'
+} as const
+
+export type BackupOrderByRelevanceFieldEnum = (typeof BackupOrderByRelevanceFieldEnum)[keyof typeof BackupOrderByRelevanceFieldEnum]
+
+
+export const OrgUnitOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  parentId: 'parentId'
+} as const
+
+export type OrgUnitOrderByRelevanceFieldEnum = (typeof OrgUnitOrderByRelevanceFieldEnum)[keyof typeof OrgUnitOrderByRelevanceFieldEnum]
+
+
+export const EmployeeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  userId: 'userId',
+  employeeNo: 'employeeNo',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  phone: 'phone',
+  jobTitle: 'jobTitle',
+  orgUnitId: 'orgUnitId',
+  managerId: 'managerId',
+  managerUserId: 'managerUserId',
+  employmentType: 'employmentType',
+  status: 'status',
+  nationalId: 'nationalId',
+  address: 'address'
+} as const
+
+export type EmployeeOrderByRelevanceFieldEnum = (typeof EmployeeOrderByRelevanceFieldEnum)[keyof typeof EmployeeOrderByRelevanceFieldEnum]
+
+
+export const LeaveTypeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name'
+} as const
+
+export type LeaveTypeOrderByRelevanceFieldEnum = (typeof LeaveTypeOrderByRelevanceFieldEnum)[keyof typeof LeaveTypeOrderByRelevanceFieldEnum]
+
+
+export const LeaveRequestOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  employeeId: 'employeeId',
+  ownerUserId: 'ownerUserId',
+  managerUserId: 'managerUserId',
+  leaveTypeId: 'leaveTypeId',
+  reason: 'reason',
+  status: 'status',
+  decidedBy: 'decidedBy',
+  decisionNote: 'decisionNote'
+} as const
+
+export type LeaveRequestOrderByRelevanceFieldEnum = (typeof LeaveRequestOrderByRelevanceFieldEnum)[keyof typeof LeaveRequestOrderByRelevanceFieldEnum]
+
+
+export const AttendanceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  employeeId: 'employeeId',
+  ownerUserId: 'ownerUserId',
+  managerUserId: 'managerUserId',
+  status: 'status',
+  note: 'note'
+} as const
+
+export type AttendanceOrderByRelevanceFieldEnum = (typeof AttendanceOrderByRelevanceFieldEnum)[keyof typeof AttendanceOrderByRelevanceFieldEnum]
+
+
+export const CandidateOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  phone: 'phone',
+  position: 'position',
+  stage: 'stage',
+  source: 'source',
+  notes: 'notes'
+} as const
+
+export type CandidateOrderByRelevanceFieldEnum = (typeof CandidateOrderByRelevanceFieldEnum)[keyof typeof CandidateOrderByRelevanceFieldEnum]
+
+
+export const PayrollRunOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  period: 'period',
+  status: 'status',
+  createdBy: 'createdBy'
+} as const
+
+export type PayrollRunOrderByRelevanceFieldEnum = (typeof PayrollRunOrderByRelevanceFieldEnum)[keyof typeof PayrollRunOrderByRelevanceFieldEnum]
+
+
+export const PayslipOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  runId: 'runId',
+  employeeId: 'employeeId',
+  ownerUserId: 'ownerUserId',
+  managerUserId: 'managerUserId',
+  status: 'status'
+} as const
+
+export type PayslipOrderByRelevanceFieldEnum = (typeof PayslipOrderByRelevanceFieldEnum)[keyof typeof PayslipOrderByRelevanceFieldEnum]
 
 
 export const TenantOrderByRelevanceFieldEnum = {
@@ -480,4 +815,12 @@ export const PolicyConditionOrderByRelevanceFieldEnum = {
 } as const
 
 export type PolicyConditionOrderByRelevanceFieldEnum = (typeof PolicyConditionOrderByRelevanceFieldEnum)[keyof typeof PolicyConditionOrderByRelevanceFieldEnum]
+
+
+export const SettingOrderByRelevanceFieldEnum = {
+  key: 'key',
+  updatedBy: 'updatedBy'
+} as const
+
+export type SettingOrderByRelevanceFieldEnum = (typeof SettingOrderByRelevanceFieldEnum)[keyof typeof SettingOrderByRelevanceFieldEnum]
 

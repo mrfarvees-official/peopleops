@@ -38,6 +38,9 @@ export function createAudit(writer: AuditWriter, ctx: AuditContext = {}) {
     restored: (t: AuditTarget, after: Data) => write("restore", t, { after }),
     transitioned: (t: AuditTarget, action: string, before: Data, after: Data) =>
       write(action, t, { before, after }),
+    // Only stored when the audit.log_views setting is on (see shouldAudit).
+    viewed: (action: "view" | "viewAny", t: AuditTarget) =>
+      write(action, t, {}),
     denied: (action: string, t: AuditTarget, reason: string) =>
       write(action, t, { outcome: "denied", reason }),
     failed: (action: string, t: AuditTarget, reason: string) =>

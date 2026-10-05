@@ -70,6 +70,7 @@ export const POLICIES: PolicyDef[] = [
       "user",
       "org_unit",
       "employee",
+      "leave_type",
       "leave_request",
       "attendance",
       "candidate",
@@ -99,8 +100,16 @@ export const POLICIES: PolicyDef[] = [
     name: "HR manager: process leave and attendance",
     effect: "allow",
     roles: ["hr_manager"],
-    actions: [...READ, "approve", "reject"],
+    actions: [...READ, "create", "update", "approve", "reject"],
     resources: ["leave_request", "attendance"],
+  },
+  {
+    code: "hr-manager-candidates",
+    name: "HR manager: follow the hiring pipeline",
+    effect: "allow",
+    roles: ["hr_manager"],
+    actions: [...READ, "export"],
+    resources: ["candidate"],
   },
   {
     code: "hr-manager-read-org-reports",
@@ -127,6 +136,14 @@ export const POLICIES: PolicyDef[] = [
     roles: ["payroll_officer"],
     actions: READ,
     resources: ["employee", "org_unit"],
+  },
+  {
+    code: "payroll-officer-read-time",
+    name: "Payroll officer: read leave and attendance (unpaid leave, hours)",
+    effect: "allow",
+    roles: ["payroll_officer"],
+    actions: READ,
+    resources: ["leave_request", "attendance"],
   },
   {
     code: "payroll-officer-reports",
@@ -183,41 +200,65 @@ export const POLICIES: PolicyDef[] = [
     resources: ["org_unit"],
   },
 
-  // ───────────── employee ─────────────
+  // ───────────── self-service: everyone is an employee ─────────────
   {
     code: "employee-own-records",
-    name: "Employee: view own records",
+    name: "Everyone: view own records",
     effect: "allow",
-    roles: ["employee"],
+    roles: "*",
     actions: ["view"],
-    resources: ["employee", "leave_request", "attendance", "payslip"],
+    resources: ["employee", "leave_request", "attendance"],
     conditions: [OWNED_BY_ME],
   },
   {
-    code: "employee-submit-own",
-    name: "Employee: submit own requests",
+    code: "employee-own-payslips",
+    name: "Everyone: view own published payslips",
     effect: "allow",
-    roles: ["employee"],
+    roles: "*",
+    actions: ["view"],
+    resources: ["payslip"],
+    conditions: [
+      OWNED_BY_ME,
+      { attribute: "resource.status", operator: "eq", value: "published" },
+    ],
+  },
+  {
+    code: "employee-edit-own-open-leave",
+    name: "Everyone: edit or cancel own leave while it is still open",
+    effect: "allow",
+    roles: "*",
+    actions: ["update"],
+    resources: ["leave_request"],
+    conditions: [
+      OWNED_BY_ME,
+      { attribute: "resource.status", operator: "in", value: ["draft", "submitted"] },
+    ],
+  },
+  {
+    code: "employee-submit-own",
+    name: "Everyone: submit own requests",
+    effect: "allow",
+    roles: "*",
     actions: ["submit"],
     resources: ["leave_request", "attendance"],
     conditions: [OWNED_BY_ME],
   },
   {
     code: "employee-create-requests",
-    name: "Employee: raise leave and attendance entries",
+    name: "Everyone: raise leave and attendance entries",
     effect: "allow",
-    roles: ["employee"],
+    roles: "*",
     actions: ["create"],
     resources: ["leave_request", "attendance"],
     conditions: [OWNED_BY_ME],
   },
   {
     code: "employee-list-own",
-    name: "Employee: may list own records (rows scoped in query)",
+    name: "Everyone: may list own records (rows scoped in query)",
     effect: "allow",
-    roles: ["employee"],
+    roles: "*",
     actions: ["viewAny"],
-    resources: ["leave_request", "attendance", "payslip"],
+    resources: ["employee", "leave_request", "attendance", "payslip"],
   },
 
   // ───────────── auditor ─────────────
@@ -243,6 +284,14 @@ export const POLICIES: PolicyDef[] = [
       "org_unit",
     ],
   },
+  {
+    code: "auditor-read-payslips",
+    name: "Auditor: review payslips and export them as evidence",
+    effect: "allow",
+    roles: ["auditor"],
+    actions: [...READ, "export"],
+    resources: ["payslip"],
+  },
 
   // ───────────── everyone ─────────────
   {
@@ -252,6 +301,15 @@ export const POLICIES: PolicyDef[] = [
     roles: "*",
     actions: READ,
     resources: ["org_unit"],
+  },
+
+  {
+    code: "everyone-read-leave-types",
+    name: "Everyone: read leave types",
+    effect: "allow",
+    roles: "*",
+    actions: READ,
+    resources: ["leave_type"],
   },
 
   // ───────────── global denies (always win) ─────────────
@@ -271,6 +329,40 @@ export const POLICIES: PolicyDef[] = [
     roles: "*",
     actions: ["create", "update", "delete", "restore"],
     resources: ["audit_log"],
+  },
+  {
+    code: "deny-delete-active-employee",
+    name: "An employee record is only deleted after they have left (terminate first)",
+    effect: "deny",
+    roles: "*",
+    actions: ["delete"],
+    resources: ["employee"],
+    conditions: [
+      { attribute: "resource.status", operator: "neq", value: "terminated" },
+    ],
+  },
+  {
+    code: "deny-change-closed-payroll",
+    name: "A locked or published payroll run cannot be edited or deleted",
+    effect: "deny",
+    roles: "*",
+    actions: ["update", "delete"],
+    resources: ["payroll_run"],
+    conditions: [
+      {
+        attribute: "resource.status",
+        operator: "in",
+        value: ["locked", "published"],
+      },
+    ],
+  },
+  {
+    code: "deny-manual-payslip-change",
+    name: "Payslips are produced by payroll runs and never typed in or edited",
+    effect: "deny",
+    roles: "*",
+    actions: ["create", "update", "delete"],
+    resources: ["payslip"],
   },
   {
     code: "deny-cross-tenant",

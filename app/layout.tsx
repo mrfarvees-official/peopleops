@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeSwitcher } from "@/features/theme/theme-switcher";
 import {
   DEFAULT_THEME,
   THEME_COOKIE,
@@ -32,10 +31,6 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         {children}
-        {/* Temporary spot: move into your header or user menu later */}
-        <div className="fixed bottom-3 right-3 z-50">
-          <ThemeSwitcher initial={theme} />
-        </div>
       </body>
     </html>
   );

@@ -10,6 +10,8 @@ const schema = z.object({
   MONITOR_ENABLED: z.enum(["true", "false"]).default("false"),
   DATABASE_URL: z.string().optional(),
   SESSION_TTL_HOURS: z.coerce.number().int().positive().default(24),
+  // Where backup files are stored (see FsBlobStore). Keep it outside the web root.
+  BACKUP_DIR: z.string().default(".data/backups"),
 });
 
 export type Config = z.infer<typeof schema>;

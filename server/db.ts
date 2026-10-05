@@ -14,6 +14,8 @@ function create(): PrismaClient {
     password: decodeURIComponent(u.password),
     database: u.pathname.slice(1),
     connectionLimit: 5,
+    // MySQL 8 caching_sha2_password over non-TLS local connections (dev docker).
+    allowPublicKeyRetrieval: true,
   });
   return new PrismaClient({ adapter });
 }

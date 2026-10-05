@@ -1,5 +1,4 @@
 import { ZodError } from "zod";
-import { InvalidCredentialsError } from "@/platform/domain/auth";
 import { getAuth } from "@/server/auth";
 import { requestInfo, sameOrigin, setSessionCookie } from "@/server/session";
 
@@ -16,7 +15,8 @@ export async function POST(req: Request) {
     await setSessionCookie(token, expiresAt);
     return Response.json({ user });
   } catch (e) {
-    if (e instanceof InvalidCredentialsError) {
+    // by name: after a hot reload the auth service can hold an older copy of the class
+    if ((e as Error)?.name === "InvalidCredentialsError") {
       return Response.json(
         { error: "Invalid sign-in details" },
         { status: 401 },

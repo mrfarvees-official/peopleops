@@ -17,6 +17,53 @@ export type Operator =
   | "contains"
   | "exists";
 
+/** Dropdown entry: `value` is what the API stores, `label` is what people read. */
+export interface Option {
+  value: string;
+  label: string;
+  description?: string;
+}
+
+/** "viewAny" -> "View any", "leave_request" -> "Leave request" */
+export function humanize(code: string): string {
+  const words = code
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/[_.-]+/g, " ")
+    .trim()
+    .toLowerCase();
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
+// Attributes policies may reference. Drives the condition dropdowns.
+export const ATTRIBUTE_OPTIONS: Option[] = [
+  { value: "action", label: "Action being performed" },
+  { value: "subject.id", label: "User: ID" },
+  { value: "subject.tenantId", label: "User: tenant" },
+  { value: "subject.email", label: "User: email" },
+  { value: "subject.displayName", label: "User: name" },
+  { value: "subject.roles", label: "User: roles" },
+  { value: "resource.id", label: "Record: ID" },
+  { value: "resource.tenantId", label: "Record: tenant" },
+  { value: "resource.ownerId", label: "Record: owner" },
+  { value: "resource.managerId", label: "Record: owner's manager" },
+  { value: "resource.status", label: "Record: status" },
+  { value: "env.ip", label: "Request: IP address" },
+  { value: "env.requestId", label: "Request: ID" },
+];
+
+export const OPERATOR_OPTIONS: Option[] = [
+  { value: "eq", label: "equals" },
+  { value: "neq", label: "does not equal" },
+  { value: "in", label: "is one of" },
+  { value: "not_in", label: "is not one of" },
+  { value: "gt", label: "is greater than" },
+  { value: "gte", label: "is at least" },
+  { value: "lt", label: "is less than" },
+  { value: "lte", label: "is at most" },
+  { value: "contains", label: "contains" },
+  { value: "exists", label: "is present" },
+];
+
 export interface PolicySubject {
   type: "any" | "role" | "user";
   role?: string; // role code
@@ -81,6 +128,7 @@ export interface Decision {
 export class ForbiddenError extends Error {
   constructor(readonly decision: Decision) {
     super("Forbidden");
+    this.name = "ForbiddenError";
   }
 }
 

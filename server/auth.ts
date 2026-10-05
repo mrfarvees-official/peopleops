@@ -3,7 +3,7 @@ import {
   createAuthService,
   type AuthService,
 } from "../platform/application/auth";
-import { PrismaAuditWriter } from "../platform/infrastructure/prisma-audit-writer";
+import { createAuditWriter } from "./audit-writer";
 import { PrismaAuthRepository } from "../platform/infrastructure/prisma-auth-repository";
 import {
   hashPassword,
@@ -18,7 +18,7 @@ export function getAuth(): AuthService {
   return (g.__auth ??= createAuthService({
     repo: new PrismaAuthRepository(getDb()),
     hasher: { hash: hashPassword, verify: verifyPassword },
-    audit: new PrismaAuditWriter(getDb()),
+    audit: createAuditWriter(),
     ttlMs: container.config.SESSION_TTL_HOURS * 3_600_000,
   }));
 }

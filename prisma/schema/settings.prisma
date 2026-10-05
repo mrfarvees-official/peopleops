@@ -1,0 +1,11 @@
+// Platform-wide key/value settings. Keys and their allowed values are defined
+// in code (platform/domain/settings.ts); this table only stores overrides.
+model Setting {
+  key       String   @id @db.VarChar(100)
+  value     Json
+  updatedBy String?  @db.VarChar(36)
+  version   Int      @default(1)
+  updatedAt DateTime @updatedAt @db.DateTime(3)
+
+  @@map("platform_setting")
+}

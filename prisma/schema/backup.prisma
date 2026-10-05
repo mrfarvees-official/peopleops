@@ -1,0 +1,20 @@
+// Metadata for stored backups. The backup file itself lives in the blob store
+// (BACKUP_DIR); this row records what it is and its checksum.
+model Backup {
+  id         String   @id @default(uuid()) @db.VarChar(36)
+  kind       String   @db.VarChar(16) // manual | pre_restore
+  scope      String   @db.VarChar(16) // tenant | platform
+  tenantId   String?  @db.VarChar(36)
+  status     String   @default("completed") @db.VarChar(16)
+  storageKey String   @db.VarChar(128)
+  sizeBytes  Int
+  checksum   String   @db.Char(64)
+  tables     Json // [{ key, rows }]
+  note       String?  @db.VarChar(255)
+  createdBy  String?  @db.VarChar(36)
+  createdAt  DateTime @default(now()) @db.DateTime(3)
+
+  @@index([tenantId, createdAt])
+  @@index([scope, createdAt])
+  @@map("platform_backup")
+}

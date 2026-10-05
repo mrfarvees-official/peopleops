@@ -101,3 +101,10 @@ describe("auth service", () => {
     expect(await (await setup()).auth.getSession("garbage")).toBeNull();
   });
 });
+
+describe("sign-in failures", () => {
+  it("name the error so callers can recognise it after a hot reload", async () => {
+    const { InvalidCredentialsError } = await import("@/platform/domain/auth");
+    expect(new InvalidCredentialsError().name).toBe("InvalidCredentialsError");
+  });
+});
