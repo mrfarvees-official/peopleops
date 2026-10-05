@@ -12,6 +12,13 @@ const TRY: Record<string, string> = {
   auditor: "Read-only oversight with access to the audit log. Cannot change anything.",
 };
 
+// Shared password of the demo logins, shown publicly. Never the developer password.
+export function demoPassword(): string | undefined {
+  return (
+    process.env.DEMO_PASSWORD_DISPLAY || process.env.SEED_DEFAULT_PASSWORD || undefined
+  );
+}
+
 export type DemoAccount = {
   role: string;
   roleName: string;

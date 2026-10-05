@@ -80,7 +80,16 @@ export function LandingPage({ password }: { password?: string }) {
               </div>
               <p className="text-sm text-muted">{a.tryThis}</p>
               <div className="mt-auto flex items-center justify-between gap-2 pt-2">
-                <code className="font-mono text-sm">{a.email}</code>
+                <div className="flex flex-col text-sm">
+                  <span className="text-muted">
+                    Email: <code className="font-mono text-foreground">{a.email}</code>
+                  </span>
+                  {password && (
+                    <span className="text-muted">
+                      Password: <code className="font-mono text-foreground">{password}</code>
+                    </span>
+                  )}
+                </div>
                 <Link
                   href={`/login?email=${encodeURIComponent(a.email)}`}
                   className="rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground"

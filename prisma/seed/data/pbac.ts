@@ -78,12 +78,20 @@ export const POLICIES: PolicyDef[] = [
     ],
   },
   {
-    code: "hr-admin-read-roles",
-    name: "HR admin: read roles",
+    code: "hr-admin-manage-pbac",
+    name: "HR admin: manage roles and access policies in their company",
     effect: "allow",
     roles: ["hr_admin"],
-    actions: READ,
-    resources: ["role"],
+    actions: "*",
+    resources: ["role", "policy", "subject", "condition", "permission"],
+  },
+  {
+    code: "hr-admin-audit-log",
+    name: "HR admin: read and export their company's audit log",
+    effect: "allow",
+    roles: ["hr_admin"],
+    actions: [...READ, "export"],
+    resources: ["audit_log"],
   },
 
   // ───────────── hr_manager ─────────────

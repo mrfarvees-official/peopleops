@@ -1,6 +1,6 @@
 import { PublicThemeCorner } from "@/features/theme/public-theme-corner";
 import { redirect } from "next/navigation";
-import { DEMO_ACCOUNTS } from "@/features/landing/demo-accounts";
+import { DEMO_ACCOUNTS, demoPassword } from "@/features/landing/demo-accounts";
 import { LoginForm } from "@/features/auth/login-form";
 import { getCurrentUser } from "@/server/session";
 
@@ -18,7 +18,7 @@ export default async function Page({
     <>
       <LoginForm
         defaultEmail={email}
-        defaultPassword={isDemo ? process.env.DEMO_PASSWORD_DISPLAY || undefined : undefined}
+        defaultPassword={isDemo ? demoPassword() : undefined}
       />
       <PublicThemeCorner />
     </>

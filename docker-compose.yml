@@ -1,6 +1,16 @@
+# Full stack: MySQL, one-shot migrate + seed, the Next.js app, and Caddy (HTTPS).
+#
+#   docker compose up -d --build
+#
+# Settings come from a .env file next to this one (see .env.example). Only
+# SEED_DEVELOPER_PASSWORD is required; everything else has a default.
+# Point the DNS A record of DOMAIN at this server and open ports 80 and 443.
+# Local database only (npm run dev):  docker compose up -d mysql
+
 services:
   mysql:
     image: mysql:8.0
+    restart: unless-stopped
     command:
       [
         "--default-time-zone=+00:00",
@@ -8,15 +18,79 @@ services:
         "--collation-server=utf8mb4_0900_ai_ci",
       ]
     environment:
-      MYSQL_ROOT_PASSWORD: devroot
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-devroot}
       MYSQL_DATABASE: peopleops
+    # localhost only, so `npm run dev` can reach it. Never published to the internet.
     ports: ["127.0.0.1:3306:3306"]
     volumes: ["mysql-data:/var/lib/mysql"]
     mem_limit: 512m
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pdevroot"]
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -p\"$$MYSQL_ROOT_PASSWORD\""]
       interval: 5s
       retries: 20
 
+  # Applies migrations, then seeds roles, policies and demo data. Safe to re-run:
+  # existing users and HR data are left alone.
+  migrate:
+    build:
+      context: .
+      target: tools
+    restart: "no"
+    depends_on:
+      mysql: { condition: service_healthy }
+    environment:
+      DATABASE_URL: mysql://root:${MYSQL_ROOT_PASSWORD:-devroot}@mysql:3306/peopleops
+      SEED_DEFAULT_PASSWORD: ${SEED_DEFAULT_PASSWORD:-Demo@2026}
+      SEED_DEVELOPER_PASSWORD: ${SEED_DEVELOPER_PASSWORD:?set SEED_DEVELOPER_PASSWORD in .env}
+      SEED_RESET_HR: ${SEED_RESET_HR:-}
+    command:
+      - sh
+      - -c
+      - npx prisma migrate deploy --config prisma7.config.ts && npx tsx prisma/seed/index.ts
+
+  app:
+    build:
+      context: .
+      target: runner
+    restart: unless-stopped
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+    environment:
+      DATABASE_URL: mysql://root:${MYSQL_ROOT_PASSWORD:-devroot}@mysql:3306/peopleops
+      # shown on the public landing page so visitors can sign in to the demo accounts
+      SEED_DEFAULT_PASSWORD: ${SEED_DEFAULT_PASSWORD:-Demo@2026}
+      DEMO_PASSWORD_DISPLAY: ${DEMO_PASSWORD_DISPLAY:-}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    volumes: ["backups:/data/backups"]
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      app: { condition: service_healthy }
+    environment:
+      DOMAIN: ${DOMAIN:-peopleops.farvees.xyz}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
 volumes:
   mysql-data:
+  backups:
+  caddy-data:
+  caddy-config:

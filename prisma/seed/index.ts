@@ -15,6 +15,8 @@ const adapter = new PrismaMariaDb({
   password: decodeURIComponent(url.password),
   database: url.pathname.slice(1),
   connectionLimit: 2,
+  // MySQL 8 caching_sha2_password over the private (non-TLS) docker network.
+  allowPublicKeyRetrieval: true,
 });
 const prisma = new PrismaClient({ adapter });
 

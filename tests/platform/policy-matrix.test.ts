@@ -121,6 +121,25 @@ describe("hr_admin", () => {
     expect(allowed("hr_admin", "delete", "employee", { status: "terminated" })).toBe(true);
   });
 
+  it("manages roles and access policies in their own company", () => {
+    for (const t of ["role", "policy", "subject", "condition", "permission"]) {
+      for (const a of ["viewAny", "view", "create", "update", "delete"]) {
+        expect(allowed("hr_admin", a, t), `${a} ${t}`).toBe(true);
+        expect(allowed("hr_admin", a, t, {}, "t2"), `${a} ${t} other company`).toBe(false);
+      }
+    }
+  });
+
+  it("reads the audit log of their own company but cannot change it", () => {
+    for (const a of ["viewAny", "view", "export"]) {
+      expect(allowed("hr_admin", a, "audit_log"), a).toBe(true);
+      expect(allowed("hr_admin", a, "audit_log", {}, "t2"), `${a} other company`).toBe(false);
+    }
+    for (const a of ["create", "update", "delete", "restore"]) {
+      expect(allowed("hr_admin", a, "audit_log"), a).toBe(false);
+    }
+  });
+
   it("stays inside their own company", () => {
     expect(allowed("hr_admin", "view", "employee", { status: "active" }, "t2")).toBe(false);
   });
