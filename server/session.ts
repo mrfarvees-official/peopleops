@@ -35,7 +35,14 @@ export async function requestInfo() {
 // CSRF defence for cookie-authenticated POSTs (on top of sameSite=lax).
 export function sameOrigin(req: Request): boolean {
   const origin = req.headers.get("origin");
-  return !origin || origin === new URL(req.url).origin;
+  if (!origin) return true;
+  const url = new URL(req.url);
+  if (origin === url.origin) return true;
+  // Behind a TLS-terminating proxy the app sees http, but the browser's Origin is https.
+  const first = (v: string | null) => v?.split(",")[0]?.trim() || undefined;
+  const proto = first(req.headers.get("x-forwarded-proto")) ?? url.protocol.replace(":", "");
+  const host = first(req.headers.get("x-forwarded-host")) ?? req.headers.get("host") ?? url.host;
+  return origin === `${proto}://${host}`;
 }
 
 export const getCurrentUser = cache(async () =>
