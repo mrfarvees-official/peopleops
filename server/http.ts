@@ -75,6 +75,11 @@ export function api<A extends unknown[]>(
           reports: (e as { reports: unknown }).reports,
         });
       }
+      if (name === "AccountNotFoundError") return fail(404, (e as Error).message);
+      if (name === "EmailTakenError" || name === "AccountRuleError") {
+        return fail(409, (e as Error).message);
+      }
+      if (name === "SignupRateLimitError") return fail(429, (e as Error).message);
       if (name === "PolicyImmutableError" || name === "PolicyCodeTakenError") {
         return fail(409, (e as Error).message);
       }

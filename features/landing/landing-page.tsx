@@ -26,9 +26,9 @@ export function LandingPage({ password }: { password?: string }) {
           PeopleOps, an HR and people operations platform
         </h1>
         <p className="max-w-2xl text-lg text-muted">
-          A multi-company HR system with role-based access on every action. No
-          sign-up needed: use one of the {DEMO_ACCOUNTS.length} demo accounts
-          below to see the product as that person would.
+          A multi-company HR system with role-based access on every action. Create
+          an account for your company, or use one of the {DEMO_ACCOUNTS.length}{" "}
+          demo accounts below to see the product as that person would.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link
@@ -36,6 +36,9 @@ export function LandingPage({ password }: { password?: string }) {
             className="rounded-full bg-accent px-5 py-3 font-medium text-accent-foreground"
           >
             Sign in
+          </Link>
+          <Link href="/signup" className="rounded-full border px-5 py-3 font-medium">
+            Create company account
           </Link>
           <a href="#accounts" className="rounded-full border px-5 py-3 font-medium">
             See demo accounts

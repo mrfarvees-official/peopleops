@@ -73,6 +73,12 @@ export const MENU: MenuItem[] = [
   },
 
   {
+    label: "Accounts",
+    href: "/accounts",
+    section: "Administration",
+    requires: { action: "viewAny", resource: "user" },
+  },
+  {
     label: "Policies",
     href: "/pbac/policies",
     section: "Administration",
