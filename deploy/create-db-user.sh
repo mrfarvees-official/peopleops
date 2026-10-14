@@ -2,7 +2,8 @@
 # Create the peopleops database and a dedicated MySQL user on the server (run once).
 #   sudo ./deploy/create-db-user.sh
 # Prompts for the MySQL username and password (nothing is stored in this file).
-# Uses the local root account via the socket (plain `mysql`). Prints the DATABASE_URL for .env.
+# Prompts for the MySQL admin username and password (empty password = local socket login).
+# Prints the DATABASE_URL for .env.
 set -euo pipefail
 
 DB_NAME="${DB_NAME:-peopleops}"
@@ -11,6 +12,8 @@ DB_HOST="${DB_HOST:-127.0.0.1}"
 read -r -p "MySQL username to create: " DB_USER
 read -r -s -p "Password for $DB_USER: " DB_PASSWORD; echo
 read -r -s -p "Confirm password: " DB_PASSWORD2; echo
+read -r -p "MySQL admin username [root]: " ADMIN_USER; ADMIN_USER=${ADMIN_USER:-root}
+read -r -s -p "Password for $ADMIN_USER (empty = socket login): " ADMIN_PASSWORD; echo
 [ -n "$DB_USER" ] && [ -n "$DB_PASSWORD" ] || { echo "Username and password are required"; exit 1; }
 [ "$DB_PASSWORD" = "$DB_PASSWORD2" ] || { echo "Passwords do not match"; exit 1; }
 case "$DB_USER" in *[!A-Za-z0-9_]*) echo "Username may only contain letters, digits and _"; exit 1;; esac
@@ -20,7 +23,7 @@ SQL_PASS=${DB_PASSWORD//\/\\}
 SQL_PASS=${SQL_PASS//\'/\'\'}
 
 # Local-only user ('localhost'); 127.0.0.1 TCP connections match it too.
-mysql <<SQL
+MYSQL_PWD="$ADMIN_PASSWORD" mysql -u "$ADMIN_USER" <<SQL
 CREATE DATABASE IF NOT EXISTS \`$DB_NAME\` CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 CREATE USER IF NOT EXISTS '$DB_USER'@'localhost' IDENTIFIED BY '$SQL_PASS';
 ALTER USER '$DB_USER'@'localhost' IDENTIFIED BY '$SQL_PASS';
