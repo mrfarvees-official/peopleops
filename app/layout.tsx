@@ -14,7 +14,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = process.env.SITE_URL ?? "https://peopleops.farvees.xyz";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  applicationName: "PeopleOps",
+  generator: "PeopleOps",
   title: { default: "PeopleOps", template: "%s · PeopleOps" },
   description: "HR and people operations platform",
 };
